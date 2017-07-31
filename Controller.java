@@ -18,19 +18,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable{
     ArrayList<Produto> produtos = new ArrayList<>();
     ObservableList<Produto> observableList = FXCollections.observableList(produtos);
-    double faturamento = 0;
-
-    public double getFaturamento() {
-        return faturamento;
-    }
-
-    public void setFaturamento(double faturamento) {
-        this.faturamento = faturamento;
-    }
-
-    public ArrayList<Produto> getProdutos() {
-        return produtos;
-    }
+    double[] faturamento = {0};
 
     @FXML
     private Button gerenciaButton;
@@ -40,12 +28,16 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        produtos.add(new Produto("a",1,1.0,"1"));
+
+        produtos.add(new Produto("Abacaxi",1,1.0,"1"));
+        produtos.add(new Produto("Uva",5,2.0,"2"));
+        produtos.add(new Produto("Laranja",10,3.0,"3"));
+
         gerenciaButton.setOnAction(event -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("gerencia.fxml"));
             try {
                 Parent root = loader.load();
-                GerenciaController control = (GerenciaController)loader.getController();
+                GerenciaController control = loader.getController();
                 control.setProdutos(produtos);
                 control.settableView(observableList);
                 control.inserir(observableList);
@@ -57,7 +49,6 @@ public class Controller implements Initializable{
                 stage.setTitle("Gerencia");
                 stage.setScene(scene);
                 stage.show();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -66,8 +57,8 @@ public class Controller implements Initializable{
         usuarioButton.setOnAction(event -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("cliente.fxml"));
             try {
-                Parent root = (Parent) loader.load();
-                ClienteController control = (ClienteController)loader.getController();
+                Parent root = loader.load();
+                ClienteController control = loader.getController();
                 control.setTableViewUser();
                 control.inserirCarrinho(produtos);
                 control.finalizarCompra(faturamento);
@@ -82,17 +73,6 @@ public class Controller implements Initializable{
                 e.printStackTrace();
             }
         });
-
-//        produtos.add(new Produto("a",1,1.0,"1"));
-//        produtos.add(new Produto("b",2,2.0,"2"));
-//        produtos.add(new Produto("c",3,3.0,"3"));
-
-        //INTERFACE GERENTE
-
-
-
-        //INTERFACE USUARIO
-
 
     }
 }

@@ -7,9 +7,9 @@ import java.util.Arrays;
  * Created by jornadaciti on 28/07/17.
  */
 public class Compra{
-    String prod, cod;
-    double preco;
-    int qtd = 0;
+    private String prod, cod;
+    private double preco;
+    private int qtd = 0;
 
     public Compra(String prod, String cod, double preco, int qtd) {
         this.prod = prod;

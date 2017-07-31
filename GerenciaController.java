@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Created by Mariana on 29/07/2017.
  */
 public class GerenciaController{
-    ArrayList<Produto> produtos = new ArrayList<>();
+    private ArrayList<Produto> produtos = new ArrayList<>();
 
     @FXML
     private TableColumn<Produto, String> produtoColumn;
@@ -113,13 +113,13 @@ public class GerenciaController{
         });
     }
 
-    public void faturamento(Double faturamento){
+    public void faturamento(double[] faturamento){
         faturamentoButton.setOnAction(event -> {
             FXMLLoader loader = new FXMLLoader(FaturamentoController.class.getResource("faturamento.fxml"));
             try {
-                Parent root = (Parent) loader.load();
-                FaturamentoController control = (FaturamentoController)loader.getController();
-                control.faturamentoTela2(faturamento);
+                Parent root = loader.load();
+                FaturamentoController control = loader.getController();
+                control.faturamentoTela(faturamento[0]);
                 Scene scene = new Scene(root, 300, 100);
                 Stage stage = new Stage();
                 stage.setTitle("Faturamento");

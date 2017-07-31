@@ -4,10 +4,10 @@ package sample;
  * Created by jornadaciti on 28/07/17.
  */
 public class Produto {
-    int estoque;
-    double preco;
-    String cod;
-    String nome;
+    private int estoque;
+    private double preco;
+    private String cod;
+    private String nome;
 
     public Produto(String nome, int estoque, double preco, String cod) {
         this.nome = nome;
