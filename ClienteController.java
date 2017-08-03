@@ -49,7 +49,6 @@ public class ClienteController {
     @FXML
     private TableColumn<Produto, Double> UserprecoColumn;
 
-
     public void setTableViewUser() {
         tableViewUser.setItems(observableList);
         UserprodutoColumn.setCellValueFactory(new PropertyValueFactory<>("prod"));
@@ -60,12 +59,18 @@ public class ClienteController {
 
     public void inserirCarrinho(ArrayList<Produto> produtos) {
         inserirProdButton.setOnAction(event -> {
-            //se der agrupar o qtd quando o msm pedido for feito mais de uma vez
-            for (int i = 0; i < produtos.size(); i++) {
-                if (produtos.get(i).getCod().equals(codigoProdTextField.getText())) {
+            for (Produto produto: produtos) {
+                if (produto.getCod().equals(codigoProdTextField.getText())){
                     try {
-                        produtos.get(i).saida(Integer.parseInt(qtdTextField.getText()));
-                        observableList.add(new Compra(produtos.get(i).getNome(), produtos.get(i).getCod(), produtos.get(i).getPreco(), Integer.parseInt(qtdTextField.getText())));
+                        produto.saida(Integer.parseInt(qtdTextField.getText()));
+                        for (Compra compra: compras) {
+                            if (compra.getCod().equals(codigoProdTextField.getText())){
+                                compra.setQtd(compra.getQtd() + Integer.parseInt(qtdTextField.getText()));
+                                tableViewUser.refresh();
+                                return;
+                            }
+                        }
+                        observableList.add(new Compra(produto.getNome(), produto.getCod(), produto.getPreco(), Integer.parseInt(qtdTextField.getText())));
                         tableViewUser.refresh();
                     } catch (ProdutoException e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -101,7 +106,6 @@ public class ClienteController {
         SelectionModel<Compra> selectionModel = tableViewUser.getSelectionModel();
         removerProdButton.setOnAction(event -> {
             Compra compra = selectionModel.getSelectedItem();
-            //Tentar melhorar isso de devolver ao estoque na hr de remover
             if (compra != null) {
                 for (Produto produto : produtos) {
                     if (produto.getCod().equals(compra.getCod())) {
@@ -115,4 +119,3 @@ public class ClienteController {
         });
     }
 }
-
