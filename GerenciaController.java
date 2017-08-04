@@ -61,6 +61,7 @@ public class GerenciaController{
     @FXML
     private TextField estoqueTextField;
 
+    //Inicializando a TableView
     public void settableView(ObservableList<Produto> observableList){
         tableView.setItems(observableList);
         produtoColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -71,32 +72,37 @@ public class GerenciaController{
 
     public void inserir(ObservableList<Produto> observableList){
         inserirButton.setOnAction(event -> {
-            int flag = 0;
             for (Produto produto : produtos) {
-                if (produto.getNome().equals(nomeTextField.getText()) || produto.getCod().equals(cogigoTextField.getText())) {
+                //Verificando se o produto ja existe e o gerente vai alterar o estoque e preço
+                if (produto.getNome().equals(nomeTextField.getText()) && produto.getCod().equals(cogigoTextField.getText())) {
+                    produto.setEstoque(produto.getEstoque() + Integer.parseInt(estoqueTextField.getText()));
+                    produto.setPreco(Integer.parseInt(precoTextField.getText()));
+                    return;
+                }else if(produto.getNome().equals(nomeTextField.getText()) || produto.getCod().equals(cogigoTextField.getText())){
+                    //Se o produto ja existir e ele digitar um codigo ou nome diferente, exibi mensagem de erro
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Dialog");
                     alert.setHeaderText("Nome ou Codigo do produto errados.");
-                    alert.setContentText("Você digitou um nome ou codigo já existente!");
+                    alert.setContentText("Você digitou um nome ou codigo incorretos!");
                     alert.showAndWait();
-                    flag = 1;
+                    return;
                 }
             }
-            if (flag == 0) {
-                try {
-                    observableList.add(new Produto(nomeTextField.getText(), Integer.parseInt(estoqueTextField.getText()), Double.parseDouble(precoTextField.getText()), cogigoTextField.getText()));
-                } catch (NumberFormatException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Dialog");
-                    alert.setHeaderText("Numero invalido.");
-                    alert.setContentText("Você digitou um numero invalido em preço ou estoque!");
-                    alert.showAndWait();
-                    e.printStackTrace();
-                }
+            //Saiu do for então não existe nenhum produco com o codigo e nome que deseja inserir, portanto inserir um novo produto
+            try {
+                observableList.add(new Produto(nomeTextField.getText(), Integer.parseInt(estoqueTextField.getText()), Double.parseDouble(precoTextField.getText()), cogigoTextField.getText()));
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Numero invalido.");
+                alert.setContentText("Você digitou um numero invalido em preço ou estoque!");
+                alert.showAndWait();
+                e.printStackTrace();
             }
         });
     }
 
+    //Inicializando a Array Produtos
     public void setProdutos(ArrayList<Produto> produtos) {
         this.produtos = produtos;
     }
@@ -106,6 +112,7 @@ public class GerenciaController{
     }
 
     public void remover(){
+        //Selecionando o item que deseja remover e removendo
         SelectionModel<Produto> selectionModel = tableView.getSelectionModel();
         removerButton.setOnAction(event -> {
             Produto produto = selectionModel.getSelectedItem();
@@ -115,10 +122,12 @@ public class GerenciaController{
 
     public void faturamento(double[] faturamento){
         faturamentoButton.setOnAction(event -> {
+            //Chamando uma nova janela para exibir o faturamento
             FXMLLoader loader = new FXMLLoader(FaturamentoController.class.getResource("faturamento.fxml"));
             try {
                 Parent root = loader.load();
                 FaturamentoController control = loader.getController();
+                //Passando o faturamento para a nova janela
                 control.faturamentoTela(faturamento[0]);
                 Scene scene = new Scene(root, 300, 100);
                 Stage stage = new Stage();
