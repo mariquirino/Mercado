@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<SplitPane dividerPositions="0.575" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ClienteController">
+   <items>
+      <TableView fx:id="tableViewUser" prefHeight="200.0" prefWidth="200.0">
+         <columns>
+            <TableColumn fx:id="UserprodutoColumn" prefWidth="100.0" text="Produto" />
+            <TableColumn fx:id="UsercodigoColumn" prefWidth="100.0" text="Codigo" />
+            <TableColumn fx:id="UserprecoColumn" prefWidth="100.0" text="Preço" />
+            <TableColumn fx:id="UserqtdColumn" prefWidth="100.0" text="Unidades" />
+         </columns>
+      </TableView>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Button fx:id="inserirProdButton" mnemonicParsing="false" text="Inserir">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="comprarButton" mnemonicParsing="false" text="Comprar">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="removerProdButton" mnemonicParsing="false" text="Remover">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Codigo">
+                           <VBox.margin>
+                              <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Quantidade">
+                           <VBox.margin>
+                              <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="132.0" prefWidth="300.0">
+                     <children>
+                        <TextField fx:id="codigoProdTextField" maxWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="qtdTextField" maxWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </items>
+</SplitPane>
